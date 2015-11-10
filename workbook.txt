@@ -1,0 +1,41 @@
+
+
+        trove_events.json
+=================================
+index: events
+type: event
+
+
+curl -XPUT http://localhost:9200/events -d '{
+ "mappings" : {
+  "_default_" : {
+   "properties" : {
+    "event_type" : {"type": "string", "index" : "not_analyzed" },
+    "display_name" : {"type": "string", "index" : "not_analyzed" },
+    "state" : { "type" : "string" },
+    "priority" : { "type" : "string" }
+   }
+  }
+ }
+}';
+
+
+curl -XPUT localhost:9200/_bulk --data-binary @trove_events.json
+
+
+        trove_instances.json
+=================================
+index: instances
+type: instance
+
+
+
+    instance_id
+        create_time
+        delete_time
+        time_delta
+        ...
+
+
+
+curl -XPUT localhost:9200/_bulk --data-binary @trove_instances.json
