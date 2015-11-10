@@ -1,6 +1,6 @@
 import json
 import sys
-from elasticsearch_dsl import DocType, String, Date, Integer
+from elasticsearch_dsl import DocType, String, Date
 from elasticsearch_dsl.connections import connections
 
 
@@ -18,7 +18,6 @@ class TroveEvent(DocType):
     tenant_id = String(index='not_analyzed')
     user_id = String(index='not_analyzed')
     priority = String(index='not_analyzed')
-    launched_at = Date()
     timestamp = Date()
 
     class Meta:
@@ -56,7 +55,6 @@ def index_events(events):
             "display_name": event.get("payload").get("display_name", "NULL"),
             "instance_name": event.get("payload").get("instance_name", "NULL"),
             "instance_id": event.get("payload").get("instance_id", "NULL"),
-            #"launched_at": event.get("payload").get("launched_at", "NULL"),
             "region": event.get("payload").get("region", "NULL"),
             "state": event.get("payload").get("state", "NULL"),
             "tenant_id": event.get("payload").get("tenant_id", "NULL"),
