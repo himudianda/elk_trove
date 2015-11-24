@@ -1,6 +1,11 @@
 import pika
 import sys
 
+# Run this script as follows:
+# ssh root@rtp10-svc-4-medium01-troverabbitmq-001
+# python trove.py "monitoring.*"
+# This should spit out all the spew
+
 credentials = pika.PlainCredentials('rabbitmq', 'rabbitmq')
 
 parameters = pika.ConnectionParameters('localhost',
