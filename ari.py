@@ -8,7 +8,7 @@ import sys
 
 credentials = pika.PlainCredentials('rabbitmq', 'rabbitmq')
 
-parameters = pika.ConnectionParameters('localhost',
+parameters = pika.ConnectionParameters('rtp10-svc-4-medium01-troverabbitmq-001',
                                        5672,
                                        '/',
                                        credentials)
