@@ -3,6 +3,7 @@ import json
 import sys
 
 from es_index import index_events, index_instances
+from configs import *
 
 
 def callback(ch, method, properties, body):
@@ -26,19 +27,18 @@ def callback(ch, method, properties, body):
 
 
 def rabbitmq_conf():
-    credentials = pika.PlainCredentials('rabbitmq', 'rabbitmq')
-    parameters = pika.ConnectionParameters('rtp10-svc-4-medium01-troverabbitmq-001', 5672, '/', credentials)
+    credentials = pika.PlainCredentials(RABBITMQ_USERNAME, RABBITMQ_PASSWORD)
+    parameters = pika.ConnectionParameters(RABBITMQ_SERVER, RABBITMQ_PORT, '/', credentials)
     connection = pika.BlockingConnection(parameters)
     channel = connection.channel()
-    channel.exchange_declare(exchange='trove', type='topic')
+    channel.exchange_declare(exchange=RABBITMQ_EXCHANGE, type=RABBITMQ_TYPE)
 
     result = channel.queue_declare(exclusive=True)
     queue_name = result.method.queue
 
     binding_keys = sys.argv[1:]
     if not binding_keys:
-        print >> sys.stderr, "Usage: %s [binding_key]..." % (sys.argv[0],)
-        sys.exit(1)
+        binding_keys = [RABBITMQ_DEFAULT_BINDING_KEY]
 
     for binding_key in binding_keys:
         channel.queue_bind(exchange='trove', queue=queue_name, routing_key=binding_key)
