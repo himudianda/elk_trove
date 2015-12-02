@@ -20,3 +20,12 @@ kibana:
     - "5601:5601"
   links:
     - elasticsearch
+nagios:
+    image: mkodockx/docker-nagios
+    volumes:
+        - /opt/dockx/nagios/config:/opt/nagios/etc
+        - /opt/dockx/nagios/var:/opt/nagios/var
+        - /opt/dockx/nagios/log:/var/log/apache2
+    environment:
+        - NAGIOSADMIN_USER=nagios
+        - NAGIOSAMDIN_PASS=nagios
