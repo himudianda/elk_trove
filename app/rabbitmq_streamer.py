@@ -20,10 +20,10 @@ def callback(ch, method, properties, body):
         sys.exit("Failed sanitizing data to json")
 
     events = []
-    print new_data_json
     events.append(new_data_json)
-    index_events(events)
-    index_instances(events)
+    write_logs(events)
+    #index_events(events)
+    #index_instances(events)
 
 
 def rabbitmq_conf():
@@ -63,10 +63,9 @@ def sample_data():
                 sys.exit("Failed sanitizing data to json")
             events.append(new_data_json)
 
-    # events_dict = dict(events=events)
-    # with open('trove_events.json', 'w') as outfile:
-    #    json.dump(events_dict, outfile, indent=4, sort_keys=True)
+    write_logs(events)
 
-    print events
-    #index_events(events)
-    #index_instances(events)
+def write_logs(events):
+    with open('trove_events.json', 'w') as outfile:
+        for event in events:
+            json.dump(event, outfile, indent=4, sort_keys=True)

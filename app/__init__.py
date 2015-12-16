@@ -10,8 +10,8 @@ def app():
     connections.create_connection(hosts=[ES_SERVER])
 
     # App logic runs here
-    rabbitmq_conf()
-    #sample_data()
+    #rabbitmq_conf()
+    sample_data()
 
     # Display cluster health
     print(connections.get_connection().cluster.health())
