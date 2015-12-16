@@ -1,4 +1,4 @@
-from rabbitmq_streamer import rabbitmq_conf
+from rabbitmq_streamer import rabbitmq_conf, sample_data
 from elasticsearch_dsl.connections import connections
 from configs import ES_SERVER
 
@@ -11,6 +11,7 @@ def app():
 
     # App logic runs here
     rabbitmq_conf()
+    #sample_data()
 
     # Display cluster health
     print(connections.get_connection().cluster.health())

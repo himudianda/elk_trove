@@ -47,3 +47,26 @@ def rabbitmq_conf():
 
     channel.basic_consume(callback, queue=queue_name, no_ack=True)
     channel.start_consuming()
+
+
+def sample_data():
+    with open('trove.events', 'r') as infile:
+        events = []
+        for line in infile.readlines():
+            new_data = line.replace('\\', '')
+            data = new_data.replace('null', '\"NULL\"')
+            new_data = data.split('", "oslo.version":')[0]
+
+            try:
+                new_data_json = json.loads(new_data)
+            except:
+                sys.exit("Failed sanitizing data to json")
+            events.append(new_data_json)
+
+    # events_dict = dict(events=events)
+    # with open('trove_events.json', 'w') as outfile:
+    #    json.dump(events_dict, outfile, indent=4, sort_keys=True)
+
+    print events
+    #index_events(events)
+    #index_instances(events)
