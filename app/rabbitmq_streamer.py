@@ -67,5 +67,4 @@ def sample_data():
 
 def write_logs(events):
     with open('trove_events.json', 'w') as outfile:
-        for event in events:
-            json.dump(event, outfile, indent=4, sort_keys=True)
+        json.dump(events, outfile, indent=4, sort_keys=True)
